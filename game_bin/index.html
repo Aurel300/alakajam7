@@ -1,8 +1,212 @@
 <!DOCTYPE html><html><head>
 	<title>AKJ7</title>
 	<meta charset="utf-8">
+	<script src="howler.js"></script>
 	<script src="game.js"></script>
-</head><body>
-	<canvas width="400" height="600" id="surf"></canvas>
-	<p id="stats"></p>
-</body></html>
+	<link href="https://fonts.googleapis.com/css?family=Chilanka&display=swap" rel="stylesheet">
+	<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+#game {
+	color: #fff;
+	font-family: "Chilanka", cursive;
+	font-size: 20px;
+	float: left;
+	height: 600px;
+	margin-right: 20px;
+	position: relative;
+	overflow: hidden;
+	text-shadow: 2px 2px 1px rgba(0, 0, 0, .8);
+	user-select: none;
+	width: 400px;
+}
+#game p, #game div {
+	position: absolute;
+}
+#game #surf {
+	height: 600px;
+	width: 400px;
+}
+#game .ctrl_music, #game .ctrl_sfx {
+	cursor: pointer;
+	font-size: 14px;
+	right: 44px;
+	opacity: .9;
+	top: 14px;
+	transition: color .3s, opacity .9s;
+	z-index: 70;
+}
+#game .ctrl_sfx {
+	right: 14px;
+}
+#game .ctrl_music:hover, #game .ctrl_sfx:hover {
+	color: #ffd258;
+}
+#game .ctrl_music.off, #game .ctrl_sfx.off {
+	text-decoration: line-through;
+}
+#game .score {
+	font-size: 27px;
+	left: 14px;
+	opacity: .9;
+	top: 14px;
+	transition: color .3s, opacity .9s;
+}
+#game .score.active {
+	color: #ffd258;
+}
+#game .score.ending {
+	opacity: 0;
+}
+#game .score_add {
+	font-size: 16px;
+	top: 36px;
+	left: 92px;
+}
+#game .end {
+	left: 0px;
+	opacity: 0;
+	text-align: center;
+	top: 0;
+	width: 400px;
+	transition: opacity .9s, top .9s;
+}
+#game .end.ending {
+	opacity: 1;
+	top: 260px;
+}
+#game .end .end_score {
+	font-size: 45px;
+}
+#game .end .best.new {
+	color: #ffd258;
+}
+#game #stats {
+	display: none;
+	font-size: 13px;
+	bottom: 1px;
+	left: 1px;
+}
+#game .instruction_start {
+	bottom: -30px;
+	font-size: 17px;
+	left: 0;
+	opacity: 0;
+	text-align: center;
+	transition: bottom .5s, opacity .5s;
+	width: 400px;
+}
+#game .instruction_start.show {
+	bottom: 30px;
+	opacity: 1;
+}
+#game .click {
+	height: 600px;
+	left: 0;
+	width: 400px;
+	top: 0;
+	z-index: 50;
+}
+#game .title {
+	font-size: 13px;
+	left: 0;
+	top: 100px;
+	text-align: center;
+	text-shadow: 2px 2px 5 px rgba(0, 0, 0, .8);
+	transition: top 1.5s;
+	width: 400px;
+}
+#game .title span {
+	color: #ffd258;
+	font-size: 57px;
+}
+#game .title.hide {
+	top: -100px;
+}
+#game .load {
+	background: #000;
+	font-size: 27px;
+	height: 600px;
+	left: 0;
+	top: 0;
+	z-index: 100;
+	width: 400px;
+}
+#game .load.hide {
+	display: none;
+}
+#game .load i {
+	left: 0;
+	position: absolute;
+	text-align: center;
+	top: 280px;
+	width: 400px;
+}
+body {
+	background: rgba(110,90,255,1);
+	background: linear-gradient(to bottom, rgba(158,30,231,1) 0%, rgba(33,185,255,1) 100%);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+a {
+	color: #ffd258;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+#hold {
+	background: rgba(205, 208, 123, .8);
+	border: 2px solid #fff;
+	color: #fff;
+	font-family: "Chilanka", cursive;
+	font-size: 19px;
+	height: 600px;
+	margin: 20px auto;
+	padding: 10px;
+	width: 700px;
+}
+#hold p.t {
+	padding: 15px 0;
+}
+#hold ul {
+	margin-left: 440px;
+	padding: 15px 0;
+}
+	</style>
+</head><body><div id="hold">
+	<div id="game">
+		<canvas id="surf" width="400" height="600"></canvas>
+		<p class="load"><i>Loading ...</i></p>
+		<p class="score">Score: 0</p>
+		<p class="ctrl_music">Mus</p>
+		<p class="ctrl_sfx">Sfx</p>
+		<p class="score_add"></p>
+		<p class="end">
+			<i class="end_score"></i><br>
+			<i class="best new">New best!</i><br>
+			Click to restart!
+		</p>
+		<p id="stats"></p>
+		<p class="title"><span>Wrapunzel</span><br>
+A game by Aurel Bílý<br>
+Made for Alakajam! 7</p>
+		<p class="instruction_start">WASD or Arrow keys to move hair.<br>
+Make complex knots around poles to gain score.<br>
+Click to start!</p>
+		<div class="click"></div>
+	</div>
+	<h1>Wrapunzel</h1>
+	<p class="t"><em>Controls:</em> WASD or arrow keys.</p>
+	<p class="t">Wrap your hair around the poles in complex knots to gain score!</p>
+	<p class="t">
+		Prince Charming has finally arrived to save you from your tower! Drop your inexplicably long hair down the side of the tower to let him climb up. But the way down is so long … so why not do some freestyle braiding?
+	</p>
+	<p class="t" id="best_page">Best score: 0</p>
+	<ul>
+		<li><a target="_blank" href="https://alakajam.com/7th-alakajam/816/wrapunzel/">Alakajam! submission page</a></li>
+		<li><a target="_blank" href="https://www.thenet.sk/">more games by Aurel</a></li>
+	</ul>
+</div></body></html>

@@ -1,4 +1,3 @@
--lib pecan
 -p /DevProjects/Repos/glewb/src/common
 -p /DevProjects/Repos/glewb/src/js
 -lib howlerjs

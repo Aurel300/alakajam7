@@ -6,25 +6,21 @@ Game synopsis: You play as Ra(s)punzel, a prince(ss) locked in a tower. Standard
 
 ### Tech TODOs
 
-- [x] add pecan
-  - [ ] main coroutine loop
 - game
   - [x] pole physics
-  - [ ] difficulty increase only when focused
+  - [x] difficulty increase only when focused
 - webgl
   - [x] setup context
   - [x] texture loading
   - [x] matrix transforms
   - [x] alpha, depth, sorting
-  - glow, etc?
-  - blend modes for particles?
-- sfx
-  - setup howler
-- music
-  - proc-gen?
+- [x] sfx
+- [x] music
 - gfx
-  - [x] hair
+  - [x] hair, princess
+  - [x] hero
   - [x] tower bricks
-  - gargoyles
-  - particles?
-  - UI
+  - [x] poles
+  - [x] UI
+  - [x] particles
+- [x] save

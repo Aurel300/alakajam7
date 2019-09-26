@@ -49,7 +49,7 @@ class Calc {
     return neg != pos ? (neg ? -amount : amount) : 0;
   }
 
-  public static inline function abs(x:Float):Float {
+  public static inline function abs<T:Float>(x:T):T {
     return x < 0 ? -x : x;
   }
 }
